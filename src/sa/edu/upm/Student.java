@@ -1,8 +1,8 @@
 package sa.edu.upm;
 
 public class Student {
-    private String name;
     private String ID;
+    private String name;
     private String email;
 
     public Student(String name, String ID) {
@@ -13,5 +13,9 @@ public class Student {
 
     private String emailMaker(){
         return this.ID + "@upm.edu.sa";
+    }
+
+    public String toString(){
+        return ID +" "+ name;
     }
 }
