@@ -1,6 +1,6 @@
 package sa.edu.upm;
 
-public class Course {
+public class Course <T> {
     private String name;
     private int credit;
 
