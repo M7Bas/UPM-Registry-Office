@@ -13,16 +13,16 @@ public class ComputerScience {
 
     private String name;
 
-    private List<Undergraduate> undergraduates;
-    private List<Graduate> graduates;
+    private ArrayList<Undergraduate> undergraduates;
+    private ArrayList<Graduate> graduates;
 
     public ComputerScience(String name) {
         this.name = name;
         this.undergraduates = new ArrayList<>();
         this.graduates = new ArrayList<>();
     }
-
-    public boolean addUndergraduateStudent (String ID, String name, String major){
+    /*
+    public boolean addUndergraduateStudent (String ID, String firstName, String lastName, String major){
         try {
             FileWriter writer = new FileWriter("Undergraduate.txt",true);
             if (findUndergraduate(ID) == null){
@@ -38,7 +38,27 @@ public class ComputerScience {
             return false;
         }
     }
+     */
 
+    public void addUndergraduateStudent (String ID, String firstName, String lastName, String major){
+            graduates.add(new Graduate(ID, firstName,lastName, major));
+    }
+
+    public void addGraduateStudent (String ID, String firstName, String lastName, String title){
+            graduates.add(new Graduate(ID, firstName, lastName, title));
+    }
+
+    public Undergraduate findUndergraduate (String ID){
+        for (Undergraduate undergraduate : undergraduates){
+            if (undergraduate.getID() == ID) {
+                return undergraduate;
+            }
+        }
+        return null;
+    }
+
+
+/*
     private Undergraduate findUndergraduate (String ID){
         try {
             Scanner scanner = new Scanner(undergraduateFile);
@@ -46,7 +66,7 @@ public class ComputerScience {
                  String[] undergraduate = scanner.nextLine().split(" "); // {ID, firstName, lastName, major}
                  if (undergraduate[0].equals(ID)){
                      scanner.close();
-                     return new Undergraduate(undergraduate[0],undergraduate[1]+" "+undergraduate[2],undergraduate[3]);
+                     return new Undergraduate(undergraduate[0],undergraduate[1],undergraduate[2],undergraduate[3]);
                  }
                  scanner.close();
                  return null;
@@ -59,24 +79,30 @@ public class ComputerScience {
         return null;
     }
 
+ */
+
     public String generateID (){
         try {
             Scanner scanner = new Scanner(undergraduateFile);
-            while (scanner.hasNextLine()){
-                String[] student = scanner.nextLine().split(" "); // {ID, firstName, lastName, major}
-//                if (student[0].equals(ID)){
-//                    scanner.close();
-//                    return student[0]
-//                }
-                scanner.close();
-                return String.valueOf(Integer.parseInt(student[0])+1);
-            }
 
+            String ID = null;
+            if (scanner.hasNextLine()){
+                while(scanner.hasNextLine()){
+                    ID = scanner.nextLine().split(" ")[0];
+                }
+                scanner.close();
+                return String.valueOf(Integer.parseInt(ID)+1);
+
+            }
         } catch (FileNotFoundException e){
             System.out.println(e.getMessage());
             e.printStackTrace();
 
         }
-        return null;
+        return  "111";
+    }
+
+    public ArrayList<Undergraduate> getUndergraduates() {
+        return undergraduates;
     }
 }

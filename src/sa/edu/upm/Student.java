@@ -2,20 +2,25 @@ package sa.edu.upm;
 
 public class Student {
     private String ID;
-    private String name;
+    private String firstName;
+    private String lastName;
     private String email;
 
-    public Student(String name, String ID) {
-        this.name = name;
+    public Student(String ID, String firstName, String lastName) {
         this.ID = ID;
-        this.email = emailMaker();
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
     private String emailMaker(){
         return this.ID + "@upm.edu.sa";
     }
 
+    public String getID() {
+        return ID;
+    }
+
     public String toString(){
-        return ID +" "+ name;
+        return ID +" "+ firstName + " " + lastName;
     }
 }
