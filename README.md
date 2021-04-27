@@ -1,4 +1,4 @@
-# UPM-Registry-Office
+# What Is The UPM Registry Office
 
 Computer science project in JAVA course at the University of Prince Muqrin with Dr.Ahmed Algogandi.
 
