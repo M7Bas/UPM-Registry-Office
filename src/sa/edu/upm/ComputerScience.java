@@ -53,7 +53,7 @@ public class ComputerScience {
                     ID = scanner.nextLine().split(" ")[0];
                 }
                 scanner.close();
-                return String.valueOf(Integer.parseInt(ID)+1);
+                return String.valueOf(Integer.parseInt(ID)+1); // add one to get the new ID and then convert it to String.
 
             }
 
