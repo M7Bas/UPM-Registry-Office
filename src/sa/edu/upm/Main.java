@@ -1,6 +1,6 @@
 package sa.edu.upm;
 
-//importing reqiured libraries
+//importing required libraries
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -21,15 +21,15 @@ public class Main {
         if ( //if all files are loaded, boolean will be True
         loadUndergraduate(UPM) &&
         loadGraduate(UPM) &&
-        loadCoursesToUnderaduateStudents(UPM)) {
+        loadCoursesToUndergraduateStudents(UPM)) {
             System.out.println("Welcome to "+ UPM.getName());
         } else { //using the save method to create files for the first time without writing anything in them.
           save(UPM);
         }
 
-        boolean quit = false; //boolean to control the mainloop
+        boolean quit = false; //boolean to control the main loop
         printMenu(); //to output the options for the user
-        while (!quit){ // the mainloop
+        while (!quit){ // the main loop
             try{
                 System.out.print("Enter a choice (0 for menu):");
                 if (scanner.hasNextInt()){
@@ -131,7 +131,7 @@ public class Main {
                 "2- Software Engineering\n" +
                 "3- Artificial intelligence");
         String major = null;
-        while (true) { //making the user choose from the following untill they choose a valid option
+        while (true) { //making the user choose from the following until they choose a valid option
             int choice = scanner.nextInt();
             if (choice == 1) major = "Cyber-Security";
             else if (choice == 2) major = "Software-Engineering";
@@ -165,15 +165,15 @@ public class Main {
                 "7- Save and quit.");
     }
 
-    public static boolean loadUndergraduate(ComputerScience UPM){ //to read the files at the beggining of the program
+    public static boolean loadUndergraduate(ComputerScience UPM){ //to read the files at the beginning of the program
         try { //reading undergraduateFile
             Scanner loader = new Scanner(undergraduateFile);
-            while (loader.hasNextLine()){ //untill the file has no more lines
+            while (loader.hasNextLine()){ //until the file has no more lines
                 String[] undergraduate = loader.nextLine().split(" "); //changing the information in the file to an array
                 UPM.addUndergraduateStudent(undergraduate[0],undergraduate[1],undergraduate[2],undergraduate[3]); //creating objects from the information in the array
             }
             loader.close();
-            return true; //the file is loaded succesfully
+            return true; //the file is loaded successfully
         } catch (FileNotFoundException e) {
             return false; //the file does not exist
         }
@@ -183,27 +183,27 @@ public class Main {
 
         try { //reading graduateFile
             Scanner loader = new Scanner(graduateFile);
-            while (loader.hasNextLine()){ //untill the file has no more lines
+            while (loader.hasNextLine()){ //until the file has no more lines
                 String[] graduate = loader.nextLine().split(" "); //changing the information in the file to an array
                 UPM.addGraduateStudent(graduate[0], graduate[1], graduate[2], graduate[3]); //creating objects from the information in the array
             }
             loader.close();
-            return true; //the file is loaded succesfully
+            return true; //the file is loaded successfully
         } catch (FileNotFoundException e) {
             return false; //the file does not exist
         }
     }
 
-    public static boolean loadCoursesToUnderaduateStudents(ComputerScience UPM){
-        try { //reading studentcourses
+    public static boolean loadCoursesToUndergraduateStudents(ComputerScience UPM){
+        try { //reading student courses
             Scanner loader = new Scanner(studentCourses);
-            while (loader.hasNextLine()){ //untill the file has no more lines
+            while (loader.hasNextLine()){ //until the file has no more lines
                 String[] studentCourse = loader.nextLine().split(" "); //changing the information in the file to an array {Student ID, Course Name, Course credit}
                 Course course = new Course(studentCourse[1],Integer.parseInt(studentCourse[2])); //creating objects from the information in the array
                 UPM.findUndergraduate(studentCourse[0]).addCourse(course); //adding course to the student with that ID (studentCourse[0])
             }
             loader.close();
-            return true; //the file is loaded succesfully
+            return true; //the file is loaded successfully
         } catch (FileNotFoundException e) {
             return false; //the file does not exist
         }
