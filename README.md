@@ -6,7 +6,7 @@ The program aims to arrange and code students with an identification number and 
 
 #How work on it?
 
-*Ala Aldoukhi
-*Asim Barnawi
-*Ehssan Alkatmeh
-*Mohammed Basuliman
+* Ala Aldoukhi
+* Asim Barnawi
+* Ehssan Alkatmeh
+* Mohammed Basuliman
