@@ -1,6 +1,9 @@
 package sa.edu.upm;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.List;
+import java.util.Scanner;
 
 public class Undergraduate extends Student{
     private String major;
@@ -11,10 +14,8 @@ public class Undergraduate extends Student{
         this.major = major;
     }
 
-
-
     @Override
     public String toString() {
-        return super.toString() +" "+ major;
+        return super.toString() +" "+ major + "\n";
     }
 }

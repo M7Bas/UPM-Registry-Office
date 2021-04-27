@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class ComputerScience {
 
-    private File undergraduateFile = new File("Undergraduate.txt");
+
 
 //    private static Scanner scanner = new Scanner("Undergraduate.txt");
 
@@ -41,7 +41,7 @@ public class ComputerScience {
      */
 
     public void addUndergraduateStudent (String ID, String firstName, String lastName, String major){
-            graduates.add(new Graduate(ID, firstName,lastName, major));
+            undergraduates.add(new Undergraduate(ID, firstName,lastName, major));
     }
 
     public void addGraduateStudent (String ID, String firstName, String lastName, String title){
@@ -81,19 +81,20 @@ public class ComputerScience {
 
  */
 
-    public String generateID (){
+    public String generateID (File fileName){
         try {
-            Scanner scanner = new Scanner(undergraduateFile);
+        Scanner scanner = new Scanner(fileName);
 
-            String ID = null;
-            if (scanner.hasNextLine()){
-                while(scanner.hasNextLine()){
-                    ID = scanner.nextLine().split(" ")[0];
-                }
-                scanner.close();
-                return String.valueOf(Integer.parseInt(ID)+1);
-
+        String ID = null;
+        if (scanner.hasNextLine()){
+            while(scanner.hasNextLine()){
+                ID = scanner.nextLine().split(" ")[0];
             }
+            scanner.close();
+            return String.valueOf(Integer.parseInt(ID)+1);
+
+        }
+
         } catch (FileNotFoundException e){
             System.out.println(e.getMessage());
             e.printStackTrace();
@@ -102,7 +103,12 @@ public class ComputerScience {
         return  "111";
     }
 
+
     public ArrayList<Undergraduate> getUndergraduates() {
         return undergraduates;
+    }
+
+    public ArrayList<Graduate> getGraduates() {
+        return graduates;
     }
 }

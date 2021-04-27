@@ -7,4 +7,9 @@ public class Graduate extends Student{
         super(ID, firstName, lastName);
         this.title = title;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() +" "+ title + "\n";
+    }
 }

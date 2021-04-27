@@ -7,22 +7,21 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
-
+    public static File undergraduateFile = new File("Undergraduate.txt");
+    public static File graduateFile = new File("Graduate.txt");
     public static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
         ComputerScience UPM = new ComputerScience("UPM Computer Science");
 
-
         loadUndergraduate(UPM);
         loadGraduate(UPM);
-
-
 
         boolean quit = false;
         printMenu();
         while (!quit){
             try{
+                System.out.print("Enter a choice (0 for menu):");
                 if (scanner.hasNextInt()){
                     int choice = scanner.nextInt();
 
@@ -31,12 +30,14 @@ public class Main {
                             printMenu();
                             break;
                         case 1:
-                            String[] inputs = askInput(); // {name, major}
-                            UPM.addUndergraduateStudent(UPM.generateID(),inputs[0],inputs[1],inputs[2])
+                            String[] inputs = askInputUndergraduate(); // {name, major}
+                            UPM.addUndergraduateStudent(UPM.generateID(undergraduateFile),inputs[0],inputs[1],inputs[2]);
                             System.out.println("Successfully added");
                             break;
                         case 2:
-                            // add graduate student
+                            String[] inputs2 = askInputGraduate(); // {name, major}
+                            UPM.addGraduateStudent(UPM.generateID(graduateFile),inputs2[0],inputs2[1],inputs2[2]);
+                            System.out.println("Successfully added");
                             break;
                         case 3:
                             // add course to undergraduate student
@@ -48,7 +49,11 @@ public class Main {
                             // find undergraduate student
                             break;
                         case 6:
-                            saveAndQuit(UPM);
+                            save(UPM);
+                            break;
+                        case 7:
+                            save(UPM);
+                            quit = true;
                             break;
                         default:
                             System.out.println("WRONG ENTRY!");
@@ -63,7 +68,7 @@ public class Main {
         }
     }
 
-    public static String[] askInput (){
+    public static String[] askInputUndergraduate (){
         System.out.println("Enter the first name:");
         String firstName = scanner.next();
         System.out.println("Enter the last name");
@@ -75,9 +80,9 @@ public class Main {
         String major = null;
         while (true) {
             int choice = scanner.nextInt();
-            if (choice == 1) major = "Cyber Security";
-            else if (choice == 2) major = "Software Engineering";
-            else if (choice == 3) major = "Artificial intelligence";
+            if (choice == 1) major = "Cyber-Security";
+            else if (choice == 2) major = "Software-Engineering";
+            else if (choice == 3) major = "Artificial-intelligence";
             if (major != null){
                 break;
             }
@@ -86,60 +91,87 @@ public class Main {
         return new String[]{firstName, lastName, major};
     }
 
+    public static String[] askInputGraduate (){
+        System.out.println("Enter the first name:");
+        String firstName = scanner.next();
+        System.out.println("Enter the last name:");
+        String lastName = scanner.next();
+        System.out.println("Enter the title:");
+        String title = scanner.next();
+        return new String[]{firstName, lastName, title};
+    }
+
     public static void printMenu(){
-        System.out.print("0- Print the menu.\n" +
+        System.out.println("0- Print the menu.\n" +
                 "1- add an undergraduate student.\n" +
                 "2- add a graduate student.\n" +
                 "3- add course to undergraduate student.\n" +
                 "4- Find undergraduate student.\n" +
                 "5- Find graduate student.\n" +
-                "6- Save and quit.\n" +
-                "Enter a choice :");
+                "6- Save.\n" +
+                "7- Save and quit.");
     }
 
     public static boolean loadUndergraduate(ComputerScience UPM){
-        File undergraduateFile = new File("Undergraduate.txt");
+
         try {
-            Scanner scanner = new Scanner(undergraduateFile);
-            while (scanner.hasNextLine()){
-                String[] undergraduate = scanner.nextLine().split(" ");
+            Scanner loader = new Scanner(undergraduateFile);
+            while (loader.hasNextLine()){
+                String[] undergraduate = loader.nextLine().split(" ");
                 UPM.addUndergraduateStudent(undergraduate[0],undergraduate[1],undergraduate[2],undergraduate[3]);
             }
+            loader.close();
+            return true;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             return false;
         }
-        return true;
     }
 
     public static boolean loadGraduate(ComputerScience UPM){
-        File graduateFile = new File("Graduate.txt");
+
         try {
             Scanner scanner = new Scanner(graduateFile);
             while (scanner.hasNextLine()){
                 String[] graduate = scanner.nextLine().split(" ");
                 UPM.addGraduateStudent(graduate[0], graduate[1], graduate[2], graduate[3]);
+
             }
+
+            scanner.close();
+            return true;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             return false;
         }
-        return true;
     }
 
-    public static void saveAndQuit(ComputerScience UPM){
+    public static void save(ComputerScience UPM){
         try {
-            FileWriter writer = new FileWriter("Undergraduate.txt",true);
+            FileWriter writerUndergraduate = new FileWriter("Undergraduate.txt");
 
-//                writer.write(ID+" "+name+" "+major+"\n");
-//                writer.close();
             for(Undergraduate undergraduate: UPM.getUndergraduates()){
-                writer.write(undergraduate.toString());
+                writerUndergraduate.write(undergraduate.toString());
             }
-            writer.close();
+            writerUndergraduate.close();
+
 
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Problem with reading the \"Undergraduate.txt\"");
+            e.printStackTrace();
+        }
+
+        try {
+            FileWriter writerGraduate = new FileWriter("Graduate.txt");
+
+            for(Graduate graduate: UPM.getGraduates()){
+                writerGraduate.write(graduate.toString());
+            }
+            writerGraduate.close();
+
+
+        } catch (IOException e) {
+            System.out.println("Problem with reading the \"Graduate.txt\"");
             e.printStackTrace();
         }
     }
