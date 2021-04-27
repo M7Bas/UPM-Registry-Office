@@ -9,13 +9,20 @@ import java.util.Scanner;
 public class Main {
     public static File undergraduateFile = new File("Undergraduate.txt");
     public static File graduateFile = new File("Graduate.txt");
+    public static File studentCourses = new File("StudentCourses.txt");
     public static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
         ComputerScience UPM = new ComputerScience("UPM Computer Science");
 
-        loadUndergraduate(UPM);
-        loadGraduate(UPM);
+        if (
+        loadUndergraduate(UPM) &&
+        loadGraduate(UPM) &&
+        loadCoursesToUnderaduateStudents(UPM)) {
+            System.out.println("Welcome to "+ UPM.getName());
+        } else {
+          save(UPM);
+        }
 
         boolean quit = false;
         printMenu();
@@ -32,21 +39,53 @@ public class Main {
                         case 1:
                             String[] inputs = askInputUndergraduate(); // {name, major}
                             UPM.addUndergraduateStudent(UPM.generateID(undergraduateFile),inputs[0],inputs[1],inputs[2]);
-                            System.out.println("Successfully added");
+                            System.out.println("Successfully added.");
+                            save(UPM);
                             break;
                         case 2:
                             String[] inputs2 = askInputGraduate(); // {name, major}
                             UPM.addGraduateStudent(UPM.generateID(graduateFile),inputs2[0],inputs2[1],inputs2[2]);
-                            System.out.println("Successfully added");
+                            System.out.println("Successfully added.");
+                            save(UPM);
                             break;
                         case 3:
-                            // add course to undergraduate student
+                            System.out.println("Enter the ID of the undergraduate student: ");
+                            Undergraduate undergraduateStudent = UPM.findUndergraduate(scanner.next());
+                            if (undergraduateStudent != null){
+                                System.out.println("Enter the course name:");
+                                String CourseName = scanner.next();
+                                System.out.println("Enter the credit hours:");
+                                int creditHours = scanner.nextInt();
+                                Course courseToAdd = new Course(CourseName, creditHours);
+                                if (undergraduateStudent.addCourse(courseToAdd)){
+                                    System.out.println("Course has been added successfully.");
+                                } else {
+                                    System.out.println("Cannot add course. Course already added!");
+                                }
+                            } else {
+                                System.out.println("Student not found.");
+                            }
+                            save(UPM);
                             break;
                         case 4:
-                            // find graduate student
+                            System.out.print("Enter the ID of the student: ");
+                            String UndergraduateID = scanner.next();
+                            undergraduateStudent = UPM.findUndergraduate(UndergraduateID);
+                            if (undergraduateStudent != null){
+                                System.out.println(undergraduateStudent.toString()+ "\t" + undergraduateStudent.emailMaker());
+                            } else {
+                                System.out.println("Student not found");
+                            }
                             break;
                         case 5:
-                            // find undergraduate student
+                            System.out.print("Enter the ID of the student: ");
+                            String graduateID = scanner.next();
+                            Graduate graduateStudent = UPM.findGraduate(graduateID);
+                            if (graduateStudent != null){
+                                System.out.println(graduateStudent.toString()+ "\t" + graduateStudent.emailMaker());
+                            } else {
+                                System.out.println("Student not found.");
+                            }
                             break;
                         case 6:
                             save(UPM);
@@ -113,7 +152,6 @@ public class Main {
     }
 
     public static boolean loadUndergraduate(ComputerScience UPM){
-
         try {
             Scanner loader = new Scanner(undergraduateFile);
             while (loader.hasNextLine()){
@@ -123,7 +161,6 @@ public class Main {
             loader.close();
             return true;
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
             return false;
         }
     }
@@ -131,17 +168,29 @@ public class Main {
     public static boolean loadGraduate(ComputerScience UPM){
 
         try {
-            Scanner scanner = new Scanner(graduateFile);
-            while (scanner.hasNextLine()){
-                String[] graduate = scanner.nextLine().split(" ");
+            Scanner loader = new Scanner(graduateFile);
+            while (loader.hasNextLine()){
+                String[] graduate = loader.nextLine().split(" ");
                 UPM.addGraduateStudent(graduate[0], graduate[1], graduate[2], graduate[3]);
-
             }
-
-            scanner.close();
+            loader.close();
             return true;
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static boolean loadCoursesToUnderaduateStudents(ComputerScience UPM){
+        try {
+            Scanner loader = new Scanner(studentCourses);
+            while (loader.hasNextLine()){
+                String[] studentCourse = loader.nextLine().split(" "); // {Student ID, Course Name, Course credit}
+                Course course = new Course(studentCourse[1],Integer.parseInt(studentCourse[2]));
+                UPM.findUndergraduate(studentCourse[0]).addCourse(course);
+            }
+            loader.close();
+            return true;
+        } catch (FileNotFoundException e) {
             return false;
         }
     }
@@ -172,6 +221,22 @@ public class Main {
 
         } catch (IOException e) {
             System.out.println("Problem with reading the \"Graduate.txt\"");
+            e.printStackTrace();
+        }
+
+        try {
+            FileWriter writerStudentCourses = new FileWriter("StudentCourses.txt");
+
+            for (Undergraduate undergraduate:UPM.getUndergraduates()){
+                for (Course course: undergraduate.getCourses()){
+                    writerStudentCourses.write(undergraduate.getID()+" "+course.toString()+"\n");
+                }
+            }
+            writerStudentCourses.close();
+
+
+        } catch (IOException e) {
+            System.out.println("Problem with reading the \"StudentCourses.txt\"");
             e.printStackTrace();
         }
     }

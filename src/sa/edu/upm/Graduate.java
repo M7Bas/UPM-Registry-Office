@@ -9,6 +9,11 @@ public class Graduate extends Student{
     }
 
     @Override
+    public String emailMaker() {
+        return "GR." + super.emailMaker();
+    }
+
+    @Override
     public String toString() {
         return super.toString() +" "+ title + "\n";
     }

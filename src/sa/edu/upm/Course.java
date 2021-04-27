@@ -8,4 +8,13 @@ public class Course <T> {
         this.name = name;
         this.credit = credit;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public String toString() {
+        return name+" "+credit;
+    }
 }

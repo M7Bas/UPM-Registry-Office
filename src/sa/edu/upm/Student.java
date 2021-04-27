@@ -10,9 +10,10 @@ public class Student {
         this.ID = ID;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.email = emailMaker();
     }
 
-    private String emailMaker(){
+    public String emailMaker(){
         return this.ID + "@upm.edu.sa";
     }
 
@@ -23,6 +24,4 @@ public class Student {
     public String toString(){
         return ID +" "+ firstName + " " + lastName;
     }
-
-
 }
