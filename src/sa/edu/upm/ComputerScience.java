@@ -30,7 +30,7 @@ public class ComputerScience {
                 return undergraduates.get(i);
             }
         }
-        return null;
+        return null; // return null if find nothing.
     }
 
     public Graduate findGraduate (String ID){
@@ -39,30 +39,30 @@ public class ComputerScience {
                 return graduates.get(i);
             }
         }
-        return null;
+        return null; // return null if find nothing.
     }
 
 
     public String generateID (File fileName){
         try {
-        Scanner scanner = new Scanner(fileName);
+            Scanner scanner = new Scanner(fileName);
 
-        String ID = null;
-        if (scanner.hasNextLine()){
-            while(scanner.hasNextLine()){
-                ID = scanner.nextLine().split(" ")[0];
+            String ID = null;
+            if (scanner.hasNextLine()){
+                while(scanner.hasNextLine()){ // while loop to get the last ID in the file.
+                    ID = scanner.nextLine().split(" ")[0];
+                }
+                scanner.close();
+                return String.valueOf(Integer.parseInt(ID)+1);
+
             }
-            scanner.close();
-            return String.valueOf(Integer.parseInt(ID)+1);
-
-        }
 
         } catch (FileNotFoundException e){
             System.out.println(e.getMessage());
             e.printStackTrace();
 
         }
-        return  "111";
+        return  "111"; // if file is empty return the first ID 111.
     }
 
 

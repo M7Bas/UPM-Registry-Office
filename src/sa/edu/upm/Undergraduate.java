@@ -1,10 +1,7 @@
 package sa.edu.upm;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class Undergraduate extends Student{
     private String major;
@@ -21,7 +18,7 @@ public class Undergraduate extends Student{
             courses.add(course);
             return true;
         }
-        return false;
+        return false; // if found the same course with the same student return false.
     }
 
     public Course findCourse(String courseName){
@@ -30,7 +27,7 @@ public class Undergraduate extends Student{
                 return courses.get(i);
             }
         }
-        return null;
+        return null; // if find nothing return false.
     }
 
     @Override
@@ -40,7 +37,7 @@ public class Undergraduate extends Student{
 
     @Override
     public String toString() {
-        return super.toString() +" "+ major + "\n";
+        return super.toString() +" "+ major + "\n"; // the new line to arrange the file nicely.
     }
 
     public List<Course> getCourses() {
