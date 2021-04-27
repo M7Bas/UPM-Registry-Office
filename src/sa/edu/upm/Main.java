@@ -9,9 +9,9 @@ import java.util.Scanner;
 
 public class Main {
     //naming files
-    public static File undergraduateFile = new File("Undergraduate.txt");
-    public static File graduateFile = new File("Graduate.txt");
-    public static File studentCourses = new File("StudentCourses.txt");
+    public static File undergraduateFile = new File("DataFiles/Undergraduate.txt");
+    public static File graduateFile = new File("DataFiles/Graduate.txt");
+    public static File studentCourses = new File("DataFiles/StudentCourses.txt");
     public static Scanner scanner = new Scanner(System.in); //creating scanner object
 
     public static void main(String[] args) {
@@ -156,9 +156,9 @@ public class Main {
 
     public static void printMenu(){ //to print the menu of choices
         System.out.println("0- Print the menu.\n" +
-                "1- add an undergraduate student.\n" +
-                "2- add a graduate student.\n" +
-                "3- add course to undergraduate student.\n" +
+                "1- Add an undergraduate student.\n" +
+                "2- Add a graduate student.\n" +
+                "3- Add course to undergraduate student.\n" +
                 "4- Find undergraduate student.\n" +
                 "5- Find graduate student.\n" +
                 "6- Save.\n" +
@@ -211,7 +211,7 @@ public class Main {
 
     public static void save(ComputerScience UPM){ //to write the new information in the files (and create the files if they didn't exist)
         try { //write in Undergraduate file
-            FileWriter writerUndergraduate = new FileWriter("Undergraduate.txt"); //creating the writer
+            FileWriter writerUndergraduate = new FileWriter("DataFiles/Undergraduate.txt"); //creating the writer
             //writing the information stored in the arrays into the file
             for(Undergraduate undergraduate: UPM.getUndergraduates()){
                 writerUndergraduate.write(undergraduate.toString());
@@ -225,7 +225,7 @@ public class Main {
         }
 
         try { //write in Graduate file
-            FileWriter writerGraduate = new FileWriter("Graduate.txt"); //creating the writer
+            FileWriter writerGraduate = new FileWriter("DataFiles/Graduate.txt"); //creating the writer
             //writing the information stored in the arrays into the file
             for(Graduate graduate: UPM.getGraduates()){
                 writerGraduate.write(graduate.toString());
@@ -239,7 +239,7 @@ public class Main {
         }
 
         try { //write in StudentCourses file
-            FileWriter writerStudentCourses = new FileWriter("StudentCourses.txt"); //creating the writer
+            FileWriter writerStudentCourses = new FileWriter("DataFiles/StudentCourses.txt"); //creating the writer
             //writing the information stored in the arrays into the file
             for (Undergraduate undergraduate:UPM.getUndergraduates()){
                 for (Course course: undergraduate.getCourses()){
