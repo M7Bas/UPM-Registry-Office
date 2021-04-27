@@ -7,9 +7,9 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
-    public static File undergraduateFile = new File("Undergraduate.txt");
-    public static File graduateFile = new File("Graduate.txt");
-    public static File studentCourses = new File("StudentCourses.txt");
+    public static File undergraduateFile = new File("DataFiles/Undergraduate.txt");
+    public static File graduateFile = new File("DataFiles/Graduate.txt");
+    public static File studentCourses = new File("DataFiles/StudentCourses.txt");
     public static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -197,7 +197,7 @@ public class Main {
 
     public static void save(ComputerScience UPM){
         try {
-            FileWriter writerUndergraduate = new FileWriter("Undergraduate.txt");
+            FileWriter writerUndergraduate = new FileWriter("DataFiles/Undergraduate.txt");
 
             for(Undergraduate undergraduate: UPM.getUndergraduates()){
                 writerUndergraduate.write(undergraduate.toString());
@@ -211,7 +211,7 @@ public class Main {
         }
 
         try {
-            FileWriter writerGraduate = new FileWriter("Graduate.txt");
+            FileWriter writerGraduate = new FileWriter("DataFiles/Graduate.txt");
 
             for(Graduate graduate: UPM.getGraduates()){
                 writerGraduate.write(graduate.toString());
@@ -225,7 +225,7 @@ public class Main {
         }
 
         try {
-            FileWriter writerStudentCourses = new FileWriter("StudentCourses.txt");
+            FileWriter writerStudentCourses = new FileWriter("DataFiles/StudentCourses.txt");
 
             for (Undergraduate undergraduate:UPM.getUndergraduates()){
                 for (Course course: undergraduate.getCourses()){
